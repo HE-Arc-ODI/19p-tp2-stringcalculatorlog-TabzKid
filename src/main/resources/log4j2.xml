@@ -5,10 +5,16 @@
       <PatternLayout
         pattern="%highlight{%d{HH:mm:ss} [%t] %-5level %c{6} - %msg%n}{INFO=black, WARN=yellow, FATAL=red}" disableAnsi="false"/>
     </Console>
+    <File name="file" fileName="logs/app.log">
+      <PatternLayout>
+        <pattern>%d{HH:mm:ss} [%t] %-5level %c{6} - %msg%n</pattern>
+      </PatternLayout>
+    </File>
   </Appenders>
   <Loggers>
-    <Root level="warn" additivity="false">
+    <Root level="debug" additivity="false">
       <AppenderRef ref="console"/>
+      <appender-ref ref="file"/>
     </Root>
   </Loggers>
 </configuration>
