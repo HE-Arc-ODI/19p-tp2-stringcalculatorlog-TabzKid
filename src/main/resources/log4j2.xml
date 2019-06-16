@@ -3,18 +3,34 @@
   <Appenders>
     <Console name="console" target="SYSTEM_OUT">
       <PatternLayout
-        pattern="%highlight{%d{HH:mm:ss} [%t] %-5level %c{6} - %msg%n}{INFO=black, WARN=yellow, FATAL=red}" disableAnsi="false"/>
+        pattern="%highlight{%d{HH:mm:ss} [%t] %-5level %c{6} - %msg%n}{INFO=black, WARN=yellow, FATAL=red}"
+        disableAnsi="false"/>
+      <Filters>
+        <ThresholdFilter level="warn" onMatch="DENY" onMisMatch="NEUTRAL"/>
+      </Filters>
     </Console>
-    <File name="file" fileName="logs/app.log">
+
+    <File name="warnFile" fileName="logs/warning.log">
+      <PatternLayout>
+        <pattern>%d{HH:mm:ss} [%t] %-5level %c{6} - %msg%n</pattern>
+      </PatternLayout>
+      <Filters>
+        <ThresholdFilter level="fatal" onMatch="DENY" onMisMatch="NEUTRAL"/>
+      </Filters>
+    </File>
+
+    <File name="fatalFile" fileName="logs/fatal.log">
       <PatternLayout>
         <pattern>%d{HH:mm:ss} [%t] %-5level %c{6} - %msg%n</pattern>
       </PatternLayout>
     </File>
+
   </Appenders>
   <Loggers>
     <Root level="debug" additivity="false">
-      <AppenderRef ref="console"/>
-      <appender-ref ref="file"/>
+      <AppenderRef ref="console" level="debug"/>
+      <AppenderRef ref="warnFile" level="warn"/>
+      <AppenderRef ref="fatalFile" level="fatal"/>
     </Root>
   </Loggers>
 </configuration>
